@@ -8,8 +8,10 @@ LOCAL_PORT: int = 10000
 async def echo(websocket, path):
     async for message in websocket:
         # Echo back the received message to the client
-        print("Received message: " + message)
         logging.info("Received message: " + message)
+        logging.warning("Received message: " + message) # Please work
+        print("Received message: " + message)
+        
         await websocket.send(message)
 
 def main():

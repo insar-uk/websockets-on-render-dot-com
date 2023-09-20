@@ -14,7 +14,8 @@
     <div>
         <label for="message">Enter a message:</label>
         <input type="text" id="message" placeholder="Type a message" />
-        <button id="sendButton">Send</button>
+        <!-- Deactivate button if disconnected -->
+        <button id="sendButton" disabled>Send</button>
     </div>
     <div>
         <h2>Server Response:</h2>
@@ -32,6 +33,7 @@
         // Listen for events
         socket.addEventListener("open", (event) => {
             console.log("WebSocket connection opened:", event);
+            sendButton.disabled = false;
         });
 
         socket.addEventListener("message", (event) => {
