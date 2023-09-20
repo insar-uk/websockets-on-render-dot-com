@@ -2,7 +2,7 @@ import asyncio
 import websockets
 
 LOCAL_URL: str = "localhost"
-LOCAL_PORT: int = 8080
+LOCAL_PORT: int = 3000
 
 async def echo(websocket, path):
     async for message in websocket:

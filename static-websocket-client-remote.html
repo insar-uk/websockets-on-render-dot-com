@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>WebSocket Client</title>
     <script>
-                        const WS_SERVER = "ws://localhost:3000";
+            const WS_SERVER = "ws://oi-websocket-test.onrender.com:3000";
     </script>
 </head>
 
@@ -26,7 +26,6 @@
         const sendButton = document.getElementById("sendButton");
         const responseDiv = document.getElementById("response");
 
-        console.log("Trying to open connection to: ", WS_SERVER)
         // Open a WebSocket connection
         const socket = new WebSocket(WS_SERVER);
 
