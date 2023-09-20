@@ -1,8 +1,8 @@
 import asyncio
 import websockets
 
-LOCAL_URL: str = "localhost"
-LOCAL_PORT: int = 3000
+LOCAL_URL: str = "0.0.0.0"
+LOCAL_PORT: int = 10000
 
 async def echo(websocket, path):
     async for message in websocket:
@@ -21,7 +21,7 @@ def main():
     server = loop.run_until_complete(start_server)
 
     try:
-        print("Server started at ws://" + LOCAL_URL + ":" + str(LOCAL_PORT))
+        print("Server started at wss://" + LOCAL_URL + ":" + str(LOCAL_PORT))
         loop.run_forever()
     except KeyboardInterrupt:
         pass
@@ -30,4 +30,5 @@ def main():
         loop.run_until_complete(server.wait_closed())
 
 if __name__ == "__main__":
+    print('Entering main...')
     main()
