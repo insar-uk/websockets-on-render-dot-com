@@ -1,9 +1,10 @@
 """
 Try to start 100 different sockets to the tiny server. Each sending their own message.
+
+Note there is some fun required when using asyncio with threads. See https://stackoverflow.com/questions/48483348/how-to-run-asyncio-event-loop-in-thread
 """
 import asyncio
 import websockets
-import threading
 
 SERVER_URL: str = "wss://oi-websocket-test.onrender.com"
 
@@ -14,15 +15,15 @@ async def send_message(message: str):
         response = await websocket.recv()
         print("Received response: " + response)
 
-def main():
+async def main():
     print("Starting test...")
+    tasks = []
+
     for i in range(100):
-        print("Starting thread " + str(i))
-        thread = threading.Thread(target=asyncio.run, args=(send_message("Hello from thread " + str(i)),))
-        thread.start()
-        print("Started thread " + str(i))
+        task = asyncio.create_task(send_message("Hello from task " + str(i) + "sent at " + str(asyncio.get_event_loop().time())))
+        tasks.append(task)
+
+    await asyncio.gather(*tasks)
 
 if __name__ == "__main__":
-    print('Starting stress test')
-    main()
-
+    asyncio.run(main())
