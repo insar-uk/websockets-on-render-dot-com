@@ -1,0 +1,28 @@
+"""
+Try to start 100 different sockets to the tiny server. Each sending their own message.
+"""
+import asyncio
+import websockets
+import threading
+
+SERVER_URL: str = "wss://oi-websocket-test.onrender.com"
+
+async def send_message(message: str):
+    async with websockets.connect(SERVER_URL) as websocket:
+        await websocket.send(message)
+        print("Sent message: " + message)
+        response = await websocket.recv()
+        print("Received response: " + response)
+
+def main():
+    print("Starting test...")
+    for i in range(100):
+        print("Starting thread " + str(i))
+        thread = threading.Thread(target=asyncio.run, args=(send_message("Hello from thread " + str(i)),))
+        thread.start()
+        print("Started thread " + str(i))
+
+if __name__ == "__main__":
+    print('Starting stress test')
+    main()
+
